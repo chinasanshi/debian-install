@@ -1,0 +1,2 @@
+anaconda
+官网下载Anaconda3-4.0.0-Linux-x86_64.sh，然后运行bash Anaconda3-4.0.0-Linux-x86_64.sh回车之后，回车确认位置，yes添加~/.bashrc中的路径PATH=/home/kyle/anaconda3/bin to PATH即可。

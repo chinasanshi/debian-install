@@ -1,0 +1,14 @@
+为Ubuntu安装Numix主题和图标
+
+我们将使用 Numix 的官方 PPA 来进行安装，先打开 终端 使用如下命令安装 Numix 主题和图标：
+
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install numix-gtk-theme numix-icon-theme-circle
+
+如果想安装 Numix 桌面壁纸，可使用如下命令：
+
+sudo apt-get install numix-wallpaper-*
+
+
+之后在设置setting的Apperance中设置style和icon即可使用numix主题和图标

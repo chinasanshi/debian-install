@@ -1,0 +1,20 @@
+apt-get install alsa-oss
+
+     
+
+前两天重装了debian，用了awesome作为窗口管理器，没有安装其他的桌面环境，费了很长时间来配置awesome。当我安装了音乐播放器准备享受重装的喜感的时候，突然发现我的电脑哑巴了！！这还了得？我曾经也遇到过这个问题，于是我立马翻出了以前帮助我解决了这个问题的博客，熟练地安装了几个程序
+
+apt-get install alsa-utils
+apt-get install alsa-oos
+apt-get install esound
+apt-get install gnome-audio
+
+然而我发现这次情况似乎不简单，因为电脑没有如期发出声音，于是我又经过翻阅无数资料，依然没有见效。后来我在一个论坛里看到了pulseaudio这个软件，于是
+
+apt-get install pulseaudio pavucontrol
+
+安装后发现并没有什么卵用,电脑依旧哑巴，然后打开pavucontrol控制台，结果一直显示Please wait，无聊之际，突然看见了它的图标似曾相识，似乎我在xfce里就有这个软件，于是我开始怀疑是不是这个软件没有安装完整才导致声音放不出。抱着死马当活马医的想法，胡乱安装了一堆软件,把名字里带有 pulse 的软件几乎都装了一遍：
+
+apt-get install gstreamer0.10-pulseaudio gstreamer1.0-pulseaudio padevchooser paman paprefs pulseaudio pulseaudio-module-gconf pulseaudio-module-x11 pulseaudio-utils pavucontrol
+
+然后打开pavucontrol，把输出设备调整了一下，已经寂寞难耐的Rhythmbox突然发出了久违的怒吼，吓了我一跳。

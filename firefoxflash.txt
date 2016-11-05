@@ -1,0 +1,3 @@
+到aodbe官方下载软件包，get.aodbe.com/flash，选择我们需要的软件包，一般选择选者其它.tar.gz包
+解压:输入命令“tar -zxvf install_flash_player_11_linux.x86_64.tar.gz
+输入命令“sudo cp libflashplayer.so /usr/lib/mozilla/plugins/

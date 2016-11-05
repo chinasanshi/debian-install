@@ -1,0 +1,2 @@
+在Window Manager Tweaks项中，Compositor中将Enable display compositing选项选中
+然后在Panel中设置即可。

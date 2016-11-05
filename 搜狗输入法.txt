@@ -1,0 +1,1 @@
+官网下载deb包，然后使用命令dpkg -i sogoupinyin_2.0.0.0078_amd64.deb

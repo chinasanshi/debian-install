@@ -1,0 +1,151 @@
+
+首先安装依赖
+apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg62-turbo-dev libtiff5-dev cmake libswscale-dev libjasper-dev
+
+在官网下载opencv源码，解压后进入目录，
+# mkdir build
+# cd build
+执行（注意有个“.”，作为cmake的参数表示当前目录）
+# cmake ../
+
+然后
+# make
+# make install
+
+下面配置library，打开/etc/ld.so.conf.d/opencv.conf，在末尾加入/usr/local/lib    (有可能是个空文件，没关系)
+
+然后 
+
+# ldconfig
+
+然后编辑/etc/bash.bashrc
+
+加入
+
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH
+
+至此，opencv安装配置完毕
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pkg-config
+pkg-config程序是干什么用的？简单的说就是向用户向程序提供相应库的路径、版本号等信息的程序。
+譬如说我们运行以下命令：
+pkg-config  查看gcc的CFLAGS参数
+$pkg-config --libs --cflags opencv
+会显示如下信息：
+-I/usr/include/opencv -lcxcore -lcv -lhighgui -lcvaux
+各位看官，你看这不就是我们用gcc编译连接时CFLAGS的参数吗？
+因此当我们需要编译连接某个库时，我们只需要把上面那行加入gcc 的参数里面即可。
+这也是configure的作用，它会检查你需要的包，产生相应的信息。
+那pkg-config从哪儿知道这些信息的呢？它是从包名为xxx.pc这个文件中查找到的。拿上面那个例子说，它是从opencv.pc这个文件中查知的。
+那pkg-config 又怎么会知道opencv.pc这个文件呢？
+下面我们看一下pkg-config是怎样工作的。
+缺省情况下，pkg-config首 先在prefix/lib/pkgconfig/中查找相关包（譬如opencv）对应的相应的文件（opencv.pc）。在linux上上述路径名为 /usr/lib/pkconfig/。若是没有找到，它也会到PKG_CONFIG_PATH这个环境变量所指定的路径下去找。若是没有找到，它就会报 错，例如：
+Package opencv was not found in the pkg-config search path.
+Perhaps you should add the directory containing `opencv.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'opencv' found
+
+设置环境变量PKG_CONFIG_PATH方法举例如下：
+export PKG_CONFIG_PATH=/cv/lib:$PKG_CONFIG_PATH
+
+================================================================
+查看一个.pc文件的内容：
+[root@yx pkgconfig]# cat glib-2.0.pc
+prefix=/usr
+exec_prefix=/usr
+libdir=/lib
+includedir=/usr/include
+configexecincludedir=/usr/lib/glib-2.0/include
+
+glib_genmarshal=glib-genmarshal
+gobject_query=gobject-query
+glib_mkenums=glib-mkenums
+
+Name: GLib
+Description: C Utility Library
+Version: 2.12.3
+Libs: -L${libdir} -lglib-2.0 
+Cflags: -I${includedir}/glib-2.0 -I${configexecincludedir}
+
+[root@yx pkgconfig]# pwd
+/usr/lib/pkgconfig
+
+可见.pc文件 是对其的库文件路径，头文件路径，版本号，Cflags等一些参数进行封装。
+
+再来看看第一个Gtk+程序里的 `pkg-config   --cflags   --libs  gtk+-2.0`意思：
+`pkg-config   --cflags   --libs  gtk+-2.0` 是pkg-config从路径/usr/lib/pkgconfig
+/gtk+-2.0.pc中提取出来的用于编译用的。
+[root@yx pkgconfig]# cat  gtk+-2.0.pc
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=/usr/include
+target=x11
+
+gtk_binary_version=2.10.0
+gtk_host=i686-redhat-linux-gnu
+
+Name: GTK+
+Description: GIMP Tool Kit (${target} target)
+Version: 2.10.4
+Requires: gdk-${target}-2.0 atk cairo
+Libs: -L${libdir} -lgtk-${target}-2.0
+Cflags: -I${includedir}/gtk-2.0
+
+显然，出可以自己来指定为：-L/usr/lib  -lgtk-{target}-2.0  -I/usr/include/gtk-2.0
+下面来看一下{target}该是多少：
+
+[root@yx lib]# ls gt
+gthumb/        gtk-2.0/       gtkhtml/      
+gtk/           gtk-sharp-2.0/ gtkmm-2.4/    
+
+[root@yx lib]# ls gtk-2.0/
+2.10.0  2.4.0  immodules  include  modules
+
+[root@yx lib]# ls gtk-sharp-2.0/
+gconfsharp-schemagen.exe
+
+[root@yx lib]# pwd
+/usr/lib
+所以认为-lgtk-{target}-2.0中的{target}该是空字符: 
+-lgtk-{target}-2.0====>-lgtk--2.0
+
+At Last So:（理论大致上：）
+-L/usr/lib  -lgtk-{target}-2.0  -I/usr/include/gtk-2.0  ====>
+-L/usr/lib  -lgtk--2.0  -I/usr/include/gtk-2.0
+而实际上更多些：
+对比pkg-config对gtk+-2.0看实际效果：
+[yuxu@yx base]$ pkg-config  --cflags  --libs  gtk+-2.0
+-I/usr/include/gtk-2.0  -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng12  -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0 
+后面还有很多的路径哦。
+
+
+
+
+gtk_base.c:
+#include <gtk/gtk.h>
+int main(int argc,char *argv[])
+{
+    GtkWidget  *window;
+    gtk_init(&argc,&argv);
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_widget_show(window);
+    gtk_main();
+    return FALSE;
+}
+
+gcc   -o     gtk_base      gtk_base.c    `pkg-config   --cflags   --libs  gtk+-2.0` 

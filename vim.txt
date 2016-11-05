@@ -1,0 +1,4 @@
+vim安装首先使用命令行apt-get install vim
+想要安装桌面版的，使用apt-get install gvim
+
+gedit安装:apt-get install gedit

@@ -1,0 +1,38 @@
+远程登陆ssh服务器的常用格式：ssh [-l login_name] [-p port] [user@]hostname
+
+想要远程linux服务器，首先需要在服务器上开通ssh服务，安装命令如下：
+
+# apt-get install openssh-server
+linux操作日志：[1]远程登录设置
+
+启动ssh-server服务，默认情况下安装结束后就自动启动了，可以用下列命令进行确认：
+
+ps -e |grep ssh，如果看到截图中的sshd说明ssh-server启动成功了
+
+启动sshserver命令：service ssh start 或者sudo /etc/init.d/ssh start
+
+关闭sshserver命令：service ssh stop
+
+重启sshserver命令：service ssh restart
+
+ssh-server配置文件位于/etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如333。
+
+设置成功后重启SSH服务：
+
+sudo /etc/init.d/ssh sto
+
+sudo /etc/init.d/ssh start
+
+或者：service ssh restart
+
+成功启动ssh-server后，应该是可以远程登录了，经过测试，普通帐号可以正常远程登录，root帐号不行，但root拥有超级权限，是我们所需要的，因此需要调整下配置文件，允许root也可以远程登录
+
+开通root远程登录权限
+
+vim /etc/ssh/sshd_config
+
+将PermitRootLogin without-password 修改为PermitRootLogin yes
+
+执行命令service ssh restart，重启ssh-server
+
+上述操作结束后，linux服务器上的配置已经结束了，成功开启了ssh-server

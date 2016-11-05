@@ -1,0 +1,82 @@
+事实证明在Debian 8.0系统上，应该安装software-properties-common来获得add-apt-repository命令！
+apt-get install software-properties-common
+python-software-properties也可以安装
+之后就可以使用add-apt-repository命令
+
+
+
+Updated Articles
+
+    Dual Boot: Fix Time Differences Between Ubuntu And Windows
+    How To Run Gedit And Nautilus As Root With pkexec Instead Of gksu
+    Download APKs From Google Play To Your Computer With Google Play Downloader
+    How To Disable GTK3 Client-Side Decorations (Header Bars)
+    Save Pidgin Passwords In System Keyring Instead Of Plain Text
+    Convert Audio / Video Files With Selene Media Encoder
+    Edit Samsung TV Channel List With SamToolBox
+    SelekTOR: Tor GUI With Country Exit Node Selection, Useful To Bypass Country Restrictions For Various Websites
+    Dukto LAN File Transfer Tool Is Easy To Use, Multi-Platform
+
+Blog Archive
+How To Add Launchpad PPAs In Debian Via `add-apt-repository` Command
+
+Author: Andrew | Posted: October 09, 2014 | Updated: 2014/10/09
+	
+	Tweet		
+"add-apt-repository" is an Ubuntu-specific script to add or remove repositories which, among others, automatically imports the public GPG key. For more information, see its man page.
+
+You can use "add-apt-repository" in Debian to add Launchpad PPAs however, there are a few things that you should know. Read on to find out how to use "add-apt-repository" in Debian.
+
+Important: many Launchpad PPAs are not compatible with Debian, because the packages are built against specific Ubuntu libraries. Some Launchpad PPAs work in Debian though - for example, the WebUpd8 Java and Atom PPAs. So make sure you know what you're doing before adding a Launchpad PPA in Debian!
+
+
+Using "add-apt-repository" in Debian
+
+To be able to use the "add-apt-repository" command in Debian Wheezy and newer, you need to install the "python-software-properties" or "software-properties-common", depending on the Debian version you're using package. To simplify things, use the command below to install both packages:
+
+sudo apt-get install software-properties-common python-software-properties
+
+
+Then you'll be able to use "add-apt-repository" in Debian. However, "add-apt-repository" doesn't work exactly the same in Debian as it works in Ubuntu, so here's what you need to do to use it properly in Debian.
+
+"add-apt-repository" can be used to add PPAs/repositories in two ways:
+
+A. Adding Launchpad PPAs in Debian as "add-apt-repository ppa:some/ppa"
+
+Debian add-apt-repository
+
+Notes about this method of adding Launchpad PPAs in Debian:
+
+    the PPA GPG key is automatically imported;
+    it adds a separate source list file under /etc/apt/sources.list.d/;
+    you need to replace your Debian version with an Ubuntu version (such as "trusty" or "precise") in the PPA source list file;
+    it only works with Launchpad PPAs.
+
+
+To add a Launchpad PPA in Debian, use the following command:
+
+sudo add-apt-repository ppa:some/ppa
+
+(obviously, replace "ppa:some/ppa" with the PPA you want to add)
+
+However, if you add a PPA under this form (for example: "add-apt-repository ppa:webupd8team/java), the PPA source file will use your current Debian version (for example, "wheezy") and it won't work, because you need to use an Ubuntu version here.
+
+To get it to work properly, after using the "add-apt-repository ppa:some/ppa" command, you need to edit the PPA source file which is located under the /etc/apt/sources.list.d/ folder, and replace your Debian version (for instance "wheezy") with an Ubuntu version - I recommend using a LTS version such as "trusty" or "precise" because non-LTS Ubuntu version are only supported for 9 months.
+
+Here's an example. Let's say you've added ppa:webupd8team/java in Debian Wheezy (using "add-apt-repository ppa:webupd8team/java" and as a result, the /etc/apt/sources.list.d/webupd8team-java-wheezy.list file was created, which looks like this:
+
+deb http://ppa.launchpad.net/webupd8team/java/ubuntu wheezy main 
+deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu wheezy main
+
+
+To get the PPA to work in Debian, you need to edit the source .list file and replace "wheezy" with either "trusty" or "precise" (Ubuntu LTS versions). After editing the file, it should look like this:
+
+deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main 
+deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+
+
+To make this easier, you can use sed to automatically replace your Debian version with an Ubuntu version. For instance, if you're using Debian Wheezy, you can use the command below to replace "wheezy" with "trusty" in the PPA .list file:
+
+sudo sed -i 's/wheezy/trusty/g' /etc/apt/sources.list.d/some-ppa-wheezy.list
+
+(of course, replace "some-ppa-wheezy.list" with the .list file for the PPA you've added)

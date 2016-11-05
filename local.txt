@@ -1,0 +1,112 @@
+如何在Debian中设置locale在Linux中通过locale来设置程序运行的不同语言环境，locale由ANSI C提供支持。
+locale的命名规则为<语言>_<地区>.<字符集编码>，如zh_CN.UTF-8，zh代表中文，CN代表大陆地区，UTF-8表示字符集。在locale环境中，有一组变量，代表国际化环境中的不同设置：
+1. LC_COLLATE定义该环境的排序和比较规则
+2. LC_CTYPE用于字符分类和字符串处理，控制所有字符的处理方式，包括字符编码，字符是单字节还是多字节，如何打印等。是最重要的一个环境变量。
+3. LC_MONETARY货币格式
+4. LC_NUMERIC非货币的数字显示格式
+5. LC_TIME时间和日期格式
+6. LC_MESSAGES提示信息的语言。另外还有一个LANGUAGE参数，它与LC_MESSAGES相似，但如果该参数一旦设置，则LC_MESSAGES参数就会失效。LANGUAGE参数可同时设置多种语言信息，如LANGUANE="zh_CN.GB18030:zh_CN.GB2312:zh_CN"。
+7. LANGLC_*的默认值，是最低级别的设置，如果LC_*没有设置，则使用该值。类似于 LC_ALL。
+8. LC_ALL它是一个宏，如果该值设置了，则该值会覆盖所有LC_*的设置值。注意，LANG的值不受该宏影响。
+一个例子：
+设置前，使用默认locale：debian:~# 
+localeLANG="POSIX"
+LC_CTYPE="POSIX"
+LC_NUMERIC="POSIX"
+LC_TIME="POSIX"
+LC_COLLATE="POSIX"
+LC_MONETARY="POSIX"
+LC_MESSAGES="POSIX"
+LC_PAPER="POSIX"
+LC_NAME="POSIX"
+LC_ADDRESS="POSIX"
+LC_TELEPHONE="POSIX"
+LC_MEASUREMENT="POSIX"
+LC_IDENTIFICATION="POSIX"
+LC_ALL= 
+设置后，使用zh_CN.GDK中文locale：
+debian:~# export LC_ALL=zh_CN.GBK
+debian:~# 
+localeLANG=zh_CN.UTF-8
+LC_CTYPE="zh_CN.GBK"
+LC_NUMERIC="zh_CN.GBK"
+LC_TIME="zh_CN.GBK"
+LC_COLLATE="zh_CN.GBK"
+LC_MONETARY="zh_CN.GBK"
+LC_MESSAGES="zh_CN.GBK"
+LC_PAPER="zh_CN.GBK"
+LC_NAME="zh_CN.GBK"
+LC_ADDRESS="zh_CN.GBK"
+LC_TELEPHONE="zh_CN.GBK"
+LC_MEASUREMENT="zh_CN.GBK"
+LC_IDENTIFICATION="zh_CN.GBK"
+LC_ALL=zh_CN.GBK
+
+"C"是系统默认的locale，"POSIX"是"C"的别名。所以当我们新安装完一个系统时，默认的locale就是C或POSIX。
+
+在Debian中安装locales的方法如下：
+ 通过apt-get install locales命令安装locales包· 安装完成locales包后，系统会自动进行locale配置，你只要选择所需的locale，可以多选。最后指定一个系统默认的locale。这样系统就会帮你自动生成相应的locale和配置好系统的locale。
+ 增加新的locale也很简单，用dpkg-reconfigure locales重新配置locale即可。
+ 我们也可手动增加locale，只要把新的locale增加到/etc/locale.gen文件中，再运行locale-gen命令即可生成新的locale。再通过设置上面介绍的LC_*变量就可设置系统的locale了。
+
+
+The following environment variables affect locale related behaviour of the system:
+
+#LANG Determines the default locale in the absence of other locale related environment variables
+#LANGUAGE
+#LC_ADDRESS Convention used for formatting of street or postal addresses
+#LC_ALL High precedence override for locale specific behaviour (overrides all other locale variables)
+#LC_COLLATE Collation order
+#LC_CTYPE Character classification and case conversion
+#LC_MONETARY Monetary formatting
+#LC_MEASUREMENT Default measurement system used within the region
+#LC_MESSAGES Format of interactive words and responses
+#LC_NUMERIC Numeric formatting
+#LC_PAPER Default paper size for region
+#LC_RESPONSE Determines how responses (such as Yes and No) appear in the local language
+#LC_TELEPHONE Conventions used for representation of telephone numbers
+#LC_TIME Date and time formats 
+
+
+ 下是一个locale.gen文件的样例。
+ ·# This file lists locales that you wish to have built. You can find a list·
+  # of valid supported locales at /usr/share/i18n/SUPPORTED. Other· 
+  # combinations are possible, but may not be well tested. If you change· 
+  # this file, you need to rerun locale-gen.· 
+  # zh_CN.GBK GBK·zh_CN.UTF-8 UTF-8
+
+  修改locale[编辑]把语言环境变量改为英文将Ubuntu系统语言环境改为英文的en_US.UTF-8
+  查看当前系统语言环境locale编辑配置文件，将zh_US.UTF-8改为en_US.UTF-8，
+  zh改为ensudo nano /etc/default/localeLANG="en_US.UTF-8"LANGUAGE="en_US:en"
+  继续查看更改后的系统语言变量，如果出现下列错误，说明没安装en_US的local
+  qii@ubuntu:~$ locale
+  locale: Cannot set LC_CTYPE to default locale: No such file or directorylocale: Cannot set LC_MESSAGES to default locale: No such file or directory
+  locale: Cannot set LC_ALL to default 
+  locale: No such file or directory
+  LANG=en_US.UTF-8
+  LANGUAGE=en_US:en
+  LC_CTYPE="en_US.UTF-8"
+  LC_NUMERIC="en_US.UTF-8"
+  LC_TIME="en_US.UTF-8"
+  LC_COLLATE="en_US.UTF-8"
+  LC_MONETARY="en_US.UTF-8"
+  LC_MESSAGES="en_US.UTF-8"
+  LC_PAPER="en_US.UTF-8"
+  LC_NAME="en_US.UTF-8"
+  LC_ADDRESS="en_US.UTF-8"
+  LC_TELEPHONE="en_US.UTF-8"
+  LC_MEASUREMENT="en_US.UTF-8"
+  LC_IDENTIFICATION="en_US.UTF-8"
+  LC_ALL=
+  查看系统内安装的locale
+  qii@ubuntu:~$ locale -alocale: Cannot set LC_CTYPE to default 
+  locale: No such file or directorylocale: Cannot set LC_MESSAGES to default 
+  locale: No such file or directorylocale: Cannot set LC_COLLATE to default 
+  locale: No such file or directory
+  CPOSIXzh_CN.utf8zh_SG.utf8
+  看吧，没装en_US.UTF-8 安装en_US.UTF-8
+  qii@ubuntu:~$ cd /usr/share/locales
+  qii@ubuntu:/usr/share/locales  $ lsinstall-language-pack remove-language-pack
+  qii@ubuntu:/usr/share/locales$ sudo ./install-language-pack en_USGenerating locales...en_US.UTF-8... doneGeneration complete.dpkg-trigger: dpkg-trigger must be called from a maintainer script (or with a --by-package option)查看，应该一切正常了。
+  qii@ubuntu:/usr/share/locales$ locale
+  LANG=en_US.UTF-8LANGUAGE=en_US:enLC_CTYPE="en_US.UTF-8"LC_NUMERIC="en_US.UTF-8"LC_TIME="en_US.UTF-8"LC_COLLATE="en_US.UTF-8"LC_MONETARY="en_US.UTF-8"LC_MESSAGES="en_US.UTF-8"LC_PAPER="en_US.UTF-8"LC_NAME="en_US.UTF-8"LC_ADDRESS="en_US.UTF-8"LC_TELEPHONE="en_US.UTF-8"LC_MEASUREMENT="en_US.UTF-8"LC_IDENTIFICATION="en_US.UTF-8"LC_ALL=

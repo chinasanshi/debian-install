@@ -1,0 +1,6 @@
+下载的网址是https://my.vmware.com/cn/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0
+
+wget https://download3.vmware.com/software/player/file/VMware-Player-12.1.1-3770994.x86_64.bundle?HashKey=74d83f637fa4ded0b013d7d6757bdf7a&params=%7B%22sourcefilesize%22%3A%22134.17+MB%22%2C%22dlgcode%22%3A%22PLAYER-1211%22%2C%22languagecode%22%3A%22cn%22%2C%22source%22%3A%22DOWNLOADS%22%2C%22downloadtype%22%3A%22manual%22%2C%22eula%22%3A%22N%22%2C%22downloaduuid%22%3A%22b80a33a7-8fae-4938-8ce6-2e1ca8e46dc8%22%2C%22purchased%22%3A%22N%22%2C%22dlgtype%22%3A%22Product+Binaries%22%2C%22productversion%22%3A%2212.1.1%22%2C%22productfamily%22%3A%22VMware+Workstation+Player%22%7D&AuthKey=1466236860_15c5123777b74c76962f0973a26108c1
+
+使用上面的链接可以下载vmware player的linux版本，文件VMware-Player-12.1.1-3770994.x86_64.bundle是.bundle后缀，直接使用#chmod a+x VMware-Player-12.1.1-3770994.x86_64.bundle来使其可以运行，然后#./VMware-Player-12.1.1-3770994.x86_64.bundle命令安装即可。
+最后需要填写一个邮箱，不需要序列号。

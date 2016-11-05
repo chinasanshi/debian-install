@@ -1,0 +1,78 @@
+toilet(厕所):有没有搞错，还有叫这个名字的命令？尽管这个名字本身就已经够搞笑了。那这个命令有什么特殊功能呢？肯定不是执行这个命令后你家马桶就能自动冲洗了。它是能用字母拼写出更大字母的工具，具体拼出什么字由命令后面的参数决定，不仅如此，它还能打印出各种风格的效果，比如彩色，金属光泽等。
+
+figlet:另一款在终端将字符进行图形化输出的软件.
+
+sl (Steam Locomotive)蒸汽机
+
+Cowsay:从这个命令的名字上，你就应该猜到，牛要说话了。的确，牛有话要说，而且是奶牛。这个命令有个加强版，叫做xcowsay，效果更好。
+
+xeyes:执行xeyes会在屏幕上出现一双大眼睛，而且眼珠会跟随你的鼠标转动。
+
+moo:你今天咩咩了没有？呵呵。安装moo，不需要安装。执行效果 ~# apt-get moo
+
+ASCIIquarium：这真是一个不可思议的杰作，你的linux终端窗口竟然成了水族馆，里面有水，有石、有鱼、有兽。不多说，自己欣赏一下吧。安装ASCIIquarium
+~# cd /tmp
+~# wget http://www.robobunny.com/projects/asciiquarium/asciiquarium.tar.gz
+~# tar -zxvf asciiquarium.tar.gz
+~# cd asciiquarium_1.1/
+~# cp asciiquarium /usr/local/bin
+~# chmod 0755 /usr/local/bin/asciiquarium
+
+执行效果
+~# asciiquarium
+
+aafire：有没有想过在你的黑白命令终端上燃起一团火将是什么样子，你只需要输入aafire命令，回车，奇迹就会出现。
+安装aafire ~#sudo apt-get install libaa-bin  执行效果 ~# aafire
+
+oneko：如果你认为linux终端只是字符和光标，没有什么其它更丰富的表现形式了，那你就大错特错了，“oneko”命令就是一个很好的例子，不要以为oneko只是一种小猫的图形，移动你的鼠标，它会和你一起玩耍的。安装oneko ~#sudo apt-get install oneko 执行效果 ~# oneko
+
+cmatrix：你应该看过好莱坞大片《骇客帝国》，相信你会对电影中那些神奇的场景着迷。在Neo的眼里任何东西都能以计算机字节流的形式展现，你是否也想做一个很有黑客范儿的数据流的桌面呢？安装cmatrix ~#sudo apt-get install cmatrix 执行效果 ~# cmatrix
+
+21.tpp：好,文艺程序员终极装X杀器来了!!!这是一个在终端上演示PPT的程序,要是哪天演讲的时候用它来展示,那真是狂拽酷炫叼炸天,分分钟惊艳全场!安装:～# sudo apt-get install tpp 
+作者：蒋航
+链接：http://www.zhihu.com/question/21654251/answer/52544111
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+这里贴一段我上面的tpp文件代码吧,这是一个最简单的tpp文件了:
+
+--author 孔佑磊
+--title A simple example
+--date 2015.06.25
+--bgcolor red
+This is the abstract of this presentation.
+It may consist of zero or more lines, and may be as long as you want.
+--newpage agenda
+--heading Agenda
+
+  * Introduction
+
+  * Concept
+
+  * Implementation
+
+  * Comparison with other implementations
+
+  * Conclusions
+--newpage intro
+--heading Introduction
+
+This is the introduction. And below, that's source code.
+
+--beginoutput
+#include <stdio.h>
+
+int main(void) {
+  puts("Hello World!");
+  return 0;
+}
+--endoutput
+然后保存为 test.tpp, 再 tpp test.pp 就可以播放 ppt 了.各种炫酷的效果,只有想不到没有做不到,代码的力量是无穷的!剩下的就自己去研究吧哈哈哈
+
+linuxlogo：安装 ~# apt-get install linuxlogo
+
+script & scriptreplay:script 可以整个终端会话的所有操作和输出录制下来,并可以通过 scriptreplay 进行播放. 在你需要将你的在终端优雅的操作展示给别人看的时候,script就非常有用了!
+
+fortune & fortune-zh:这个命令会随机输出有趣的话,比如名言或笑话.同样需要先安装:apt-get install fortune(fortune-zh)
+
+screenfetch:它可以在终端上生成漂亮的文本系统信息和ASCII艺术的发行版LOGO.

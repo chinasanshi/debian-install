@@ -1,0 +1,1 @@
+安装Getting Things Gnome使用命令apt-get install gtg即可

@@ -1,0 +1,6 @@
+更换登陆界面的壁纸
+/usr/share/images/desktop-base/login-background.svg
+更换grub界面
+/usr/share/images/desktop-base/lines-grub.png
+
+
